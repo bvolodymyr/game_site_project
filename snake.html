@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Змійка 8-біт</title>
+    <style>
+        @font-face {
+            font-family: orbitron-medium;
+            src: url(fonts/orbitron-medium.otf);
+          }
+        body {
+            font-family: orbitron-medium;
+            margin: 0;
+            background-color: #2C1229;
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        header {
+            text-align:center;
+            font-size: 35px;
+            color: #6B046D;
+            background-color: #971995;
+            width: 100%; /* Розтягуємо на всю ширину */
+            position: absolute;
+            top: 0;
+          }
+        canvas {
+            background-color: #421b3e;
+            border: 2px solid #555;
+        }
+
+        .score {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h3>Snake</h3>
+      </header>
+    <div class="score">Score: <span id="score">0</span></div>
+    <canvas id="snakeCanvas" width="400" height="400"></canvas>
+    <script src="snake.js"></script>
+</body>
+</html>

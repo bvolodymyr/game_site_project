@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pong</title>
+  <style>
+    @font-face {
+      font-family: orbitron-medium;
+      src: url(fonts/orbitron-medium.otf);
+    }
+    body { 
+        font-family: orbitron-medium;
+        margin: 0; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        min-height: 100vh; 
+        background-color: #2C1229; }
+    header {
+      text-align:center;
+      font-size: 35px;
+      color: #6B046D;
+      background-color: #971995;
+      width: 100%; /* Розтягуємо на всю ширину */
+    }
+    canvas { 
+        border: 2px solid #555; 
+        background-color: #421b3e; 
+        margin-top: 100px; /* Додаємо трохи відступу від заголовка */ }
+  </style>
+</head>
+<body>
+  <header>
+    <h3>Pong</h3>
+  </header>
+  <canvas id="pingPongCanvas" width="600" height="400"></canvas>
+  <script src="pong.js"></script>
+</body>
+</html>
