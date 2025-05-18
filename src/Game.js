@@ -11,56 +11,56 @@ const enemies = tileMap.getEnemies(velocity);
 
 let gameOver = false;
 let gameWin = false;
-const gameOverSound = new Audio("sounds/gameOver.wav");
-const gameWinSound = new Audio("sounds/gameWin.wav");
+const gameOverSound = new Audio("/sounds/gameOver.wav");
+const gameWinSound = new Audio("/sounds/gameWin.wav");
 
 function gameLoop() {
-  tileMap.draw(ctx);
-  drawGameEnd();
-  pacman.draw(ctx, pause(), enemies);
-  enemies.forEach((enemy) => enemy.draw(ctx, pause(), pacman));
-  checkGameOver();
-  checkGameWin();
+	tileMap.draw(ctx);
+	drawGameEnd();
+	pacman.draw(ctx, pause(), enemies);
+	enemies.forEach((enemy) => enemy.draw(ctx, pause(), pacman));
+	checkGameOver();
+	checkGameWin();
 }
 
 function checkGameWin() {
-  if (!gameWin) {
-    gameWin = tileMap.didWin();
-    if (gameWin) {
-      gameWinSound.play();
-    }
-  }
+	if (!gameWin) {
+		gameWin = tileMap.didWin();
+		if (gameWin) {
+			gameWinSound.play();
+		}
+	}
 }
 
 function checkGameOver() {
-  if (!gameOver) {
-    gameOver = isGameOver();
-    if (gameOver) {
-      gameOverSound.play();
-    }
-  }
+	if (!gameOver) {
+		gameOver = isGameOver();
+		if (gameOver) {
+			gameOverSound.play();
+		}
+	}
 }
 
 function isGameOver() {
-  return enemies.some(
-    (enemy) => !pacman.powerDotActive && enemy.collideWith(pacman)
-  );
+	return enemies.some(
+		(enemy) => !pacman.powerDotActive && enemy.collideWith(pacman)
+	);
 }
 
 function pause() {
-  return !pacman.madeFirstMove || gameOver || gameWin;
+	return !pacman.madeFirstMove || gameOver || gameWin;
 }
 
 function drawGameEnd() {
-  if (gameOver || gameWin) {
-    let text = "   You Win!";
-    if (gameOver) {
-      text = " Game Over";
-    }
-    ctx.font = "75px comic sans";
-    ctx.fillStyle = "white";
-    ctx.fillText(text, 10, canvas.height / 2);
-  }
+	if (gameOver || gameWin) {
+		let text = "   You Win!";
+		if (gameOver) {
+			text = " Game Over";
+		}
+		ctx.font = "75px comic sans";
+		ctx.fillStyle = "white";
+		ctx.fillText(text, 10, canvas.height / 2);
+	}
 }
 
 tileMap.setCanvasSize(canvas);

@@ -7,7 +7,7 @@
     <style>
         @font-face {
             font-family: orbitron-medium;
-            src: url(fonts/orbitron-medium.otf);
+            src: url(../fonts/orbitron-medium.otf);
           }
         body {
             font-family: orbitron-medium;
@@ -38,6 +38,25 @@
             font-size: 1.5em;
             margin-bottom: 20px;
         }
+        .home-button {
+      position: absolute;
+      bottom: 20%;
+      left: 48.2%;
+      background-color: white;
+      color: #2e0249;
+      border: none;
+      padding: 6px 12px;
+      font-size: 0.9em;
+      cursor: pointer;
+      font-family: orbitron-medium;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    .home-button:hover {
+      background-color: #adadad;
+    }
     </style>
 </head>
 <body>
@@ -46,6 +65,7 @@
       </header>
     <div class="score">Score: <span id="score">0</span></div>
     <canvas id="snakeCanvas" width="400" height="400"></canvas>
-    <script src="snake.js"></script>
+     <a href="./main.html" class="home-button">Home</a>
+    <script src="../Games/snakeGame.js"></script>
 </body>
 </html>
