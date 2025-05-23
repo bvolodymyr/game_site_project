@@ -76,21 +76,51 @@
      .home-link{
         margin-left: 77px;
     }
+
+    .error-message {
+      color: #ff6b6b;
+      margin-top: 10px;
+      font-size: 0.9em;
+      display: none;
+    }
   </style>
 </head>
 <body>
 
   <h2>Login</h2>
   <div class="form-container">
-    <form>
-      <input type="text" placeholder="Username" required>
-      <input type="password" placeholder="Password" required>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <div id="errorMessage" class="error-message"></div>
       <button type="submit">Login</button>
     </form>
-    <a href="RegisterPage.html" class="back-link">Don't have an account yet?  Sign up</a>
-<a href="./main.html" class="home-link">Go to main page</a>
+    <a href="registerPage.html" class="back-link">Don't have an account yet?  Sign up</a>
+    <a href="./main.html" class="home-link">Go to main page</a>
   </div>  
-</div>
 
+  <script src="../public/js/auth.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+
+      try {
+        await loginUser(username, password);
+        window.location.href = './main.html';
+      } catch (error) {
+        errorMessage.textContent = error.message;
+        errorMessage.style.display = 'block';
+      }
+    });
+
+    // Check if user is already logged in
+    if (isLoggedIn()) {
+      window.location.href = './main.html';
+    }
+  </script>
 </body>
 </html>

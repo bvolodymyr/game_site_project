@@ -85,7 +85,7 @@
             text-decoration: none;
             transition: color 0.3s ease;
             padding: 8px 12px; /* Додаємо трохи padding для кращого вигляду */
-          
+
         }
 
         .nav-button:hover {
@@ -131,9 +131,14 @@
         <h1>NEDOSITE WITH 8-BIT GAMES</h1>
     </header>
 
-    <div class="sign-buttons">
+    <div class="sign-buttons" id="authButtons">
         <a href="../pages/loginPage.html" class="sign-button">Login</a>
         <a href="../pages/registerPage.html" class="sign-button">Sign up</a>
+    </div>
+
+    <div class="user-profile" id="userProfile" style="display: none;">
+        <span id="welcomeMessage"></span>
+        <button id="logoutButton" class="sign-button">Logout</button>
     </div>
 
     <div class="game-grid">
@@ -158,8 +163,33 @@
         </nav>
     </footer>
 
+    <script src="../public/js/auth.js"></script>
     <script>
-        // Тут можна додати JavaScript для додаткової інтерактивності, якщо потрібно
+        // Check if user is logged in
+        function updateAuthUI() {
+            const authButtons = document.getElementById('authButtons');
+            const userProfile = document.getElementById('userProfile');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+
+            if (isLoggedIn()) {
+                const user = getCurrentUser();
+                welcomeMessage.textContent = `Welcome, ${user.username}!`;
+                authButtons.style.display = 'none';
+                userProfile.style.display = 'block';
+            } else {
+                authButtons.style.display = 'block';
+                userProfile.style.display = 'none';
+            }
+        }
+
+        // Logout button event listener
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            logoutUser();
+            updateAuthUI();
+        });
+
+        // Update UI on page load
+        updateAuthUI();
     </script>
 </body>
 </html>

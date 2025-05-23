@@ -1,6 +1,7 @@
-import MovingDirection from "./MovingDirection.js";
+//import MovingDirection from "./MovingDirection.js";
+const MovingDirection = require("./MovingDirection.js");
 
-export default class Enemy {
+class Enemy {
 	constructor(x, y, tileSize, velocity, tileMap) {
 		this.x = x;
 		this.y = y;
@@ -142,3 +143,4 @@ export default class Enemy {
 		this.image = this.normalGhost;
 	}
 }
+module.exports = Enemy;
