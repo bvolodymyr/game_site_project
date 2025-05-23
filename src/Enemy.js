@@ -1,5 +1,4 @@
-//import MovingDirection from "./MovingDirection.js";
-const MovingDirection = require("./MovingDirection.js");
+const MovingDirection = require('./MovingDirection.js');
 
 class Enemy {
 	constructor(x, y, tileSize, velocity, tileMap) {
@@ -132,13 +131,13 @@ class Enemy {
 
 	#loadImages() {
 		this.normalGhost = new Image();
-		this.normalGhost.src = "/images/ghost.png";
+		this.normalGhost.src = '/images/ghost.png';
 
 		this.scaredGhost = new Image();
-		this.scaredGhost.src = "/images/scaredGhost.png";
+		this.scaredGhost.src = '/images/scaredGhost.png';
 
 		this.scaredGhost2 = new Image();
-		this.scaredGhost2.src = "/images/scaredGhost2.png";
+		this.scaredGhost2.src = '/images/scaredGhost2.png';
 
 		this.image = this.normalGhost;
 	}

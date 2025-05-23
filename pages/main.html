@@ -101,14 +101,16 @@
         }
 
         .sign-button {
+            font-family: orbitron-medium;
             background-color: white; /* Жовтий фон */
             color: #2e0249; /* Темно-фіолетовий текст */
             border: none;
             padding: 6px 10px; /* Менші відступи */
-            font-size: 0.8em; /* Ще менший розмір шрифту */
+            font-size: 1em; /* Ще менший розмір шрифту */
             cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s ease;
+            border-radius: 5px;
         }
 
         .sign-button:hover {
@@ -136,7 +138,7 @@
         <a href="../pages/registerPage.html" class="sign-button">Sign up</a>
     </div>
 
-    <div class="user-profile" id="userProfile" style="display: none;">
+    <div class="user-profile" id="userProfile" style="position: absolute; right:3%; top: 3%">
         <span id="welcomeMessage"></span>
         <button id="logoutButton" class="sign-button">Logout</button>
     </div>
@@ -158,8 +160,8 @@
 
     <footer>
         <nav class="navigation">
-            <a href="pages/settings.html" class="nav-button"><b>Settings</b></a>
-            <a href="pages/about-us.html" class="nav-button"><b>About us</b></a>
+            <a href="/pages/settings.html" class="nav-button"><b>Settings</b></a>
+            <a href="/pages/aboutUs.html" class="nav-button"><b>About us</b></a>
         </nav>
     </footer>
 

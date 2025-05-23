@@ -5,4 +5,4 @@ const MovingDirection = {
 	right: 3,
 };
 
-module.exports =  MovingDirection;
+module.exports = MovingDirection;

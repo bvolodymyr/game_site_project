@@ -1,23 +1,19 @@
-//import Pacman from "./Pacman.js";
-//import Enemy from "./Enemy.js";
-//import MovingDirection from "./MovingDirection.js";
-
-const Pacman = require("./Pacman.js");
-const Enemy = require("./Enemy.js");
-const MovingDirection = require("./MovingDirection.js");
+const Pacman = require('./Pacman.js');
+const Enemy = require('./Enemy.js');
+const MovingDirection = require('./MovingDirection.js');
 
 class TileMap {
 	constructor(tileSize) {
 		this.tileSize = tileSize;
 
 		this.yellowDot = new Image();
-		this.yellowDot.src = "/images/yellowDot.png";
+		this.yellowDot.src = '/images/yellowDot.png';
 
 		this.pinkDot = new Image();
-		this.pinkDot.src = "/images/pinkDot.png";
+		this.pinkDot.src = '/images/pinkDot.png';
 
 		this.wall = new Image();
-		this.wall.src = "/images/wall.png";
+		this.wall.src = '/images/wall.png';
 
 		this.powerDot = this.pinkDot;
 		this.powerDotAnmationTimerDefault = 30;
@@ -103,7 +99,7 @@ class TileMap {
 	}
 
 	#drawBlank(ctx, column, row, size) {
-		ctx.fillStyle = "black";
+		ctx.fillStyle = 'black';
 		ctx.fillRect(column * this.tileSize, row * this.tileSize, size, size);
 	}
 
