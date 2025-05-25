@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вхід</title>
+  <title>Реєстрація</title>
   <style>
-    @font-face {
-      font-family: orbitron-medium;
-      src: url(../fonts/orbitron-medium.otf);
-    }
+     @font-face {
+            font-family: orbitron-medium;
+            src: url(../fonts/orbitron-medium.otf);
+          }
     body {
       font-family: orbitron-medium;
       margin: 0;
@@ -22,12 +22,13 @@
     }
 
     h2 {
-      font-family: orbitron-medium;
+      font-family: orbitron-medium;  
       color: #6B046D;
       margin-bottom: 30px;
     }
 
     .form-container {
+      font-family: orbitron-medium;
       background-color: #971995;
       padding: 30px;
       border-radius: 10px;
@@ -36,7 +37,7 @@
     }
 
     input {
-      font-family: orbitron-medium;
+      font-family: orbitron-medium;  
       width: 93%;
       padding: 10px;
       margin: 10px 0;
@@ -45,7 +46,7 @@
       font-size: 1em;
     }
 
-    button {
+    button { 
       font-family: orbitron-medium;
       width: 100%;
       padding: 10px;
@@ -64,6 +65,7 @@
     }
 
     .back-link {
+        font-family: orbitron-medium;
       margin-top: 15px;
       color: #ddd;
       font-size: 0.9em;
@@ -73,7 +75,7 @@
     .back-link:hover {
       text-decoration: underline;
     }
-     .home-link{
+    .home-link{
         margin-left: 77px;
     }
 
@@ -87,30 +89,39 @@
 </head>
 <body>
 
-  <h2>Login</h2>
+  <h2>Sign up</h2>
   <div class="form-container">
-    <form id="loginForm">
+    <form id="registerForm">
       <input type="text" id="username" placeholder="Username" required>
+      <input type="email" id="email" placeholder="Email" required>
       <input type="password" id="password" placeholder="Password" required>
       <div id="errorMessage" class="error-message"></div>
-      <button type="submit">Login</button>
+      <button type="submit">Sign Up</button>
     </form>
-    <a href="registerPage.html" class="back-link">Don't have an account yet?  Sign up</a>
-    <a href="./main.html" class="home-link">Go to main page</a>
-  </div>  
+    <a href="loginPage.html" class="back-link">Already have an account?   Login</a><br>
+    <a href=".././main.html" class="home-link">Go to main page</a>
+  </div>
 
-  <script src="../public/js/auth.js"></script>
+  <script src="../../public/js/auth.js"></script>
   <script>
-    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
       const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const errorMessage = document.getElementById('errorMessage');
 
+      // Simple validation
+      if (password.length < 6) {
+        errorMessage.textContent = 'Password must be at least 6 characters';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
       try {
-        await loginUser(username, password);
-        window.location.href = './main.html';
+        await registerUser(username, email, password);
+        window.location.href = '.././main.html';
       } catch (error) {
         errorMessage.textContent = error.message;
         errorMessage.style.display = 'block';
@@ -119,7 +130,7 @@
 
     // Check if user is already logged in
     if (isLoggedIn()) {
-      window.location.href = './main.html';
+      window.location.href = '.././main.html';
     }
   </script>
 </body>
