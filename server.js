@@ -24,9 +24,9 @@ testConnection();
 // Initialize database (sync models)
 initializeDatabase();
 
-// Import routes
-const authRoutes = require('./routes/auth');
-const scoreRoutes = require('./routes/scores');
+// Import routes with new server route filenames
+const authRoutes = require('./routes/auth-server');   // renamed from './routes/auth'
+const scoreRoutes = require('./routes/scores-server'); // renamed from './routes/scores'
 
 // Use routes
 app.use('/api/auth', authRoutes);
