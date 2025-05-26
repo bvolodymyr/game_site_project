@@ -37,13 +37,15 @@
 
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Трохи більша мінімальна ширина */
+            grid-template-columns: repeat(2, minmax(160px, 160px)); /* Трохи більша мінімальна ширина */
             gap: 80px; /* Більший відступ між кнопками */
             margin-bottom: 50px; /* Більший відступ після сітки */
             padding: 0 30px; /* Більші бокові відступи */
             max-width: 700px; /* Трохи більша максимальна ширина */
             width: 100%;
             box-sizing: border-box;
+            justify-content: center;
+            align-items: center;
         }
 
         .game-button {
@@ -126,6 +128,20 @@
             right: 0; /* Прив'язуємо до правого краю */
             color: #aaa; /* Світло-сірий колір тексту */
         }
+        .leaderboard {
+            margin-top: 20px;
+            width: 370px;
+            border-collapse: collapse;
+        }
+        .leaderboard th, .leaderboard td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #555;
+        }
+        .leaderboard th {
+            background-color: #971995;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -157,7 +173,22 @@
             <img src="../images/pac-man.png" alt="Pac-Man">
         </a>
     </div>
-
+    <div style="position: absolute; left:1%; top:27%">
+    <h3>Leaderboard</h3>
+    <table class="leaderboard" id="leaderboard">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+                <th>Game</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+            <!-- Leaderboard data will be inserted here -->
+        </tbody>
+    </table>
+    </div>
     <footer>
         <nav class="navigation">
             <a href="/pages/settings.html" class="nav-button"><b>Settings</b></a>
