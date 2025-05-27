@@ -5,7 +5,7 @@
   <style>
     @font-face {
       font-family: orbitron-medium;
-      src: url(../fonts/orbitron-medium.otf);
+      src: url(/fonts/orbitron-medium.otf);
     }
     body { 
         font-family: orbitron-medium;
@@ -19,7 +19,7 @@
       }
     header {
       text-align:center;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       color: #6B046D;
       position: absolute;
       background-color: #971995;
@@ -29,22 +29,22 @@
     canvas { 
         border: 2px solid #555; 
         background-color: #421b3e; 
-        margin-top: 100px; /* Додаємо трохи відступу від заголовка */ }
+        margin-top: 220px; /* Додаємо трохи відступу від заголовка */ }
     .home-button {
-      position: absolute;
-      top: 3%;
-      left: 2%;
-      background-color: white;
-      color: #2e0249;
-      border: none;
-      padding: 6px 12px;
-      font-size: 1.1em;
-      cursor: pointer;
-      font-family: orbitron-medium;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-      transition: background-color 0.3s ease;
-      text-decoration: none;
-      border-radius: 5px;
+       background-color: white;
+            color: #2e0249;
+            border: none;
+            padding: 10px 18px;
+            font-size: 1em;
+            cursor: pointer;
+            font-family: orbitron-medium;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            border-radius: 4px;
+            position: absolute;
+            left: 2%;
+            top: 23%;
     }
     .home-button:hover {
       background-color: #adadad;
@@ -80,17 +80,17 @@
 </head>
 <body>
   <header>
-    <h3 style="position: absolute; top:-10%; left: 46%">Pong</h3>
+    <a href=".././main.html" class="home-button">Home</a>
+    <h3>Pong</h3>
   </header>
-      <div style="position: absolute; left: 40%; top:88%">
+   <canvas id="pingPongCanvas" width="500" height="300"></canvas>
+      <div style="margin-top: 20px;">
   <div class="score">Score: <span id="score">0</span></div>
-    <div class="high-score" id="highScoreContainer" style="display: none;">
-        Your High Score: <span id="highScore">0</span>
-    </div>
-    <div class="login-prompt" id="loginPrompt" style="position:absolute; bottom:20%; left:38%">
+        <div class="login-prompt" id="loginPrompt" >
         <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
     </div>
-  <canvas id="pingPongCanvas" width="500" height="300"></canvas>
+    </div>
+  
   <div style="position: absolute; left:1%; top:27%">
     <h3>Leaderboard</h3>
     <table class="leaderboard" id="leaderboard">
@@ -103,11 +103,11 @@
         </thead>
         <tbody id="leaderboardBody">
            
-            </script>
+            
         </tbody>
     </table>
     </div>
-  <a href=".././main.html" class="home-button">Home</a>
+ 
 </body>
 </html>
 

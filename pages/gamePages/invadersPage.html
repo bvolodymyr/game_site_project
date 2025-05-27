@@ -7,7 +7,7 @@
     <style>
         @font-face {
             font-family: orbitron-medium;
-            src: url(../fonts/orbitron-medium.otf);
+            src: url(/fonts/orbitron-medium.otf);
         }
 
         body {
@@ -28,7 +28,7 @@
             color: #6B046D;
             background-color: #971995;
             width: 100%;
-            height: 15%;
+            height: 12%;
             position: absolute;
             top: 0;
         }
@@ -37,8 +37,7 @@
             background-color: #421b3e;
             border: 2px solid #555;
             width: 460px;
-            height: 400px;
-            margin-top: 70px; /* Відступ щоб не накладатись на header */
+            height: 400px; 
         }
 
         .score {
@@ -52,7 +51,7 @@
             color: #2e0249;
             padding: 8px 16px;
             font-family: orbitron-medium, sans-serif;
-            font-size: 1.2em;
+            font-size: 1em;
             font-weight: bold;
             text-decoration: none;
             border: none;
@@ -61,7 +60,7 @@
             display: inline-block;
             position: absolute;
             left: 2%;
-            top: 3.5%;
+            top: 23%;
             box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4);
             transition: background-color 0.3s ease;
         }
@@ -94,16 +93,15 @@
 </head>
 <body>
     <header>
-        <h3 style="position: absolute; left:41%; top:-3%">Space Invaders</h3>
+        <a href=".././main.html" class="home-button">Home</a>
+        <h3 >Space Invaders</h3>
     </header>
     <canvas id="game-canvas" width="360" height="360"></canvas>
-     <div style="position: absolute; left: 40%; top:88%">
+     <div style="margin-top: 20px;">
   <div class="score">Score: <span id="score">0</span></div>
-    <div class="high-score" id="highScoreContainer" style="display: none;">
-        Your High Score: <span id="highScore">0</span>
-    </div>
     <div class="login-prompt" id="loginPrompt">
         <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
+    </div>
     </div>
     <div style="position: absolute; left:1%; top:27%">
     <h3>Leaderboard</h3>
@@ -120,7 +118,7 @@
         </tbody>
     </table>
     </div>
-    <a href=".././main.html" class="home-button">Home</a>
+    
 
 </body>
 </html>

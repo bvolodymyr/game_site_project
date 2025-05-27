@@ -8,27 +8,9 @@
     <style>
         @font-face {
             font-family: orbitron-medium;
-            src: url(../fonts/orbitron-medium.otf);
+            src: url(/fonts/orbitron-medium.otf);
           }
-#gameCanvas {
-  transform: translate(-50%, -50%);
-  box-shadow: 10px 10px 20px black;
-  margin-top: 70px;
-  margin-left: 260px;
-}
-
-      header {
-        text-align:center;
-        font-size: 1.1rem;
-        color: #6B046D;
-        background-color: #971995;
-        width: 100%; /* Розтягуємо на всю ширину */
-        height: 15%;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-      body {
+body {
         font-family: orbitron-medium;
         display: flex;
         justify-content: center;
@@ -39,10 +21,26 @@
         background-color: #2C1229; 
         color: #eee
       }
-      /* Кнопка повернення додана */
-      .home-button {
-        position: fixed;
-        top: 3.6%;
+#gameCanvas {
+    background-color: #421b3e;
+    box-shadow: 10px 10px 20px black;
+}
+
+header {
+        text-align:center;
+        font-size: 1.1rem;
+        color: #6B046D;
+        background-color: #971995;
+        width: 100%; /* Розтягуємо на всю ширину */
+        height: 12%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      
+.home-button {
+        position: absolute;
+        top: 24%;
         left: 2%;
         background-color: white;
         color: #2e0249;
@@ -58,7 +56,8 @@
         transition: background-color 0.3s ease;
         z-index: 900;
       }
-      .home-button:hover {
+
+.home-button:hover {
         background-color: #adadad;
         color: #2e0249;
       }
@@ -85,15 +84,15 @@
   </head>
   <body>
     <header>
-      <h1 style="position:absolute; top:-8%; left:42%">Pac-Man</h1>
+      <a href=".././main.html" class="home-button">Home</a>
+      <h1>Pac-Man</h1>
     </header>
     <canvas id="gameCanvas"></canvas>
+    <div style="margin-top: 20px;">
   <div class="score">Score: <span id="score">0</span></div>
-    <div class="high-score" id="highScoreContainer" style="display: none;">
-        Your High Score: <span id="highScore">0</span>
-    </div>
     <div class="login-prompt" id="loginPrompt">
         <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
+    </div>
     </div>
 <div style="position: absolute; left:1%; top:27%">
 <h3>Leaderboard</h3>
@@ -110,7 +109,7 @@
         </tbody>
     </table>
     </div>
-    <a href=".././main.html" class="home-button">Home</a>
+    
 
   </body>
 </html>

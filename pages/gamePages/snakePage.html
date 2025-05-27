@@ -7,7 +7,7 @@
     <style>
         @font-face {
             font-family: orbitron-medium;
-            src: url(../fonts/orbitron-medium.otf);
+            src: url(/fonts/orbitron-medium.otf);
           }
         body {
             font-family: orbitron-medium;
@@ -32,7 +32,7 @@
            
           }
         canvas {
-            margin: 20px;
+            margin: 0px;
             background-color: #421b3e;
             border: 2px solid #555;
         }
@@ -40,6 +40,7 @@
         .score {
             font-size: 1.5em;
             margin-bottom: 1px;
+            margin-top: 10px;
         }
         .home-button {
            
@@ -56,7 +57,7 @@
             border-radius: 4px;
             position: absolute;
             left: 2%;
-            top: 1.7%;
+            top: 2.5%;
         }
         .home-button:hover {
             background-color: #adadad;
@@ -66,7 +67,7 @@
             margin-bottom: 10px;
         }
         .login-prompt {
-            margin-top: 10px;
+            margin-top: 0px;
             font-size: 0.9em;
             color: #aaa;
         }
@@ -88,18 +89,17 @@
 </head>
 <body>
     <header>
-        <h3 style="position: absolute; top:-35%; left: 45%">Snake</h3>
+        <h3 style="position: absolute; top:-8%; left: 47%">Snake</h3>
     </header>
-    <div style="position: absolute; left: 40%; top:88%">
+  
+    <canvas id="snakeCanvas" width="400" height="400"></canvas>
+      <div>
     <div class="score">Score: <span id="score">0</span></div>
-    <div class="high-score" id="highScoreContainer" style="display: none;">
-        Your High Score: <span id="highScore">0</span>
-    </div>
-    <div class="login-prompt" id="loginPrompt" style="display: none;">
+    
+    <div class="login-prompt" id="loginPrompt" >
         <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
     </div>
     </div>
-    <canvas id="snakeCanvas" width="400" height="400"></canvas>
     <a href=".././main.html" class="home-button">Home</a>
 <div style="position: absolute; left:1%; top:35%">
     <h3>Leaderboard</h3>
