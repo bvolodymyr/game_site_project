@@ -1,5 +1,4 @@
 
-// Combined Pacman Game Logic in One File
 
 // MovingDirection constants
 const MovingDirection = {

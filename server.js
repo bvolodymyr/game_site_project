@@ -7,6 +7,8 @@ require('dotenv').config();
 const { testConnection } = require('./config/database');
 const { initializeDatabase } = require('./models');
 
+
+
 // Initialize Express app
 const app = express();
 
@@ -31,6 +33,9 @@ const scoreRoutes = require('./routes/scores-server'); // renamed from './routes
 // Use routes
 app.use('/api/auth', authRoutes);
 app.use('/api/scores', scoreRoutes);
+app.use('/api/leaderboard', scoreRoutes); // Reusing scores route for leaderboard
+
+
 
 // Serve the main HTML file for any other route
 app.get('*', (req, res) => {
@@ -42,3 +47,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
+

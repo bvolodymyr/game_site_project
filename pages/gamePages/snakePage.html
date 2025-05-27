@@ -22,37 +22,41 @@
         }
         header {
             text-align:center;
-            font-size: 35px;
+            font-size: 25px;
             color: #6B046D;
             background-color: #971995;
             width: 100%; /* Розтягуємо на всю ширину */
+            height: 10%;
             position: absolute;
             top: 0;
+           
           }
         canvas {
+            margin: 20px;
             background-color: #421b3e;
             border: 2px solid #555;
         }
 
         .score {
             font-size: 1.5em;
-            margin-bottom: 20px;
+            margin-bottom: 1px;
         }
         .home-button {
-            position: absolute;
-            bottom: 20%;
-            left: 48.2%;
+           
             background-color: white;
             color: #2e0249;
             border: none;
-            padding: 6px 12px;
-            font-size: 0.9em;
+            padding: 10px 18px;
+            font-size: 1em;
             cursor: pointer;
             font-family: orbitron-medium;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
             transition: background-color 0.3s ease;
             text-decoration: none;
             border-radius: 4px;
+            position: absolute;
+            left: 2%;
+            top: 1.7%;
         }
         .home-button:hover {
             background-color: #adadad;
@@ -84,15 +88,20 @@
 </head>
 <body>
     <header>
-        <h3>Snake</h3>
+        <h3 style="position: absolute; top:-35%; left: 45%">Snake</h3>
     </header>
+    <div style="position: absolute; left: 40%; top:88%">
     <div class="score">Score: <span id="score">0</span></div>
     <div class="high-score" id="highScoreContainer" style="display: none;">
         Your High Score: <span id="highScore">0</span>
     </div>
+    <div class="login-prompt" id="loginPrompt" style="display: none;">
+        <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
+    </div>
+    </div>
     <canvas id="snakeCanvas" width="400" height="400"></canvas>
     <a href=".././main.html" class="home-button">Home</a>
-
+<div style="position: absolute; left:1%; top:35%">
     <h3>Leaderboard</h3>
     <table class="leaderboard" id="leaderboard">
         <thead>
@@ -103,84 +112,49 @@
             </tr>
         </thead>
         <tbody id="leaderboardBody">
-            <!-- Leaderboard data will be inserted here -->
+             
         </tbody>
     </table>
+    </div>
+    <button id="testLeaderboardUpdate">Test Update Leaderboard</button>
 
-    <script src="../../public/js/auth.js"></script>
-    <script src="../../public/js/scores.js"></script>
-    <script src="../../Games/snakeGame.js"></script>
-    <script>
-        // Check if user is logged in
-        const isUserLoggedIn = isLoggedIn();
-        const highScoreContainer = document.getElementById('highScoreContainer');
-        const loginPrompt = document.getElementById('loginPrompt');
-        const highScoreElement = document.getElementById('highScore');
 
-        // Show/hide elements based on login status
-        if (isUserLoggedIn) {
-            highScoreContainer.style.display = 'block';
-            loginPrompt.style.display = 'none';
+    <script src="../../public/js/auth-client.js"></script>
+<script src="../../public/js/scores-client.js"></script>
+<script src="../../Games/snakeGame.js"></script>
+<script>
+   document.getElementById('testLeaderboardUpdate').addEventListener('click', () => {
+    deleteUsers([2,3]); // Replace with actual user IDs to delete
+   });
+</script>
+<script>
+  // Check if user is logged in
+  const isUserLoggedIn = isLoggedIn();
+  const highScoreContainer = document.getElementById('highScoreContainer');
+  const loginPrompt = document.getElementById('loginPrompt');
+  const highScoreElement = document.getElementById('highScore');
 
-            // Get user's high score
-            getUserHighScore('snake').then(highScore => {
-                highScoreElement.textContent = highScore;
-            });
-        } else {
-            highScoreContainer.style.display = 'none';
-            loginPrompt.style.display = 'block';
-        }
+  if (isUserLoggedIn) {
+    highScoreContainer.style.display = 'block';
+    loginPrompt.style.display = 'none';
+    getUserHighScore('snake').then(highScore => {
+      highScoreElement.textContent = highScore;
+    });
+  } else {
+    highScoreContainer.style.display = 'none';
+    loginPrompt.style.display = 'block';
+  }
 
-        // Load leaderboard
-        getLeaderboard('snake').then(leaderboard => {
-            const leaderboardBody = document.getElementById('leaderboardBody');
-            leaderboardBody.innerHTML = '';
-
-            leaderboard.forEach((entry, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${entry.username}</td>
-                    <td>${entry.score}</td>
-                `;
-                leaderboardBody.appendChild(row);
-            });
-        });
-
-        // Override the resetGame function to save score
-        const originalResetGame = window.resetGame;
-        window.resetGame = function() {
-            const currentScore = parseInt(document.getElementById('score').textContent);
-
-            // Save score if user is logged in and score is greater than 0
-            if (isUserLoggedIn && currentScore > 0) {
-                saveScore('snake', currentScore).then(() => {
-                    // Update high score
-                    getUserHighScore('snake').then(highScore => {
-                        highScoreElement.textContent = highScore;
-                    });
-
-                    // Reload leaderboard
-                    getLeaderboard('snake').then(leaderboard => {
-                        const leaderboardBody = document.getElementById('leaderboardBody');
-                        leaderboardBody.innerHTML = '';
-
-                        leaderboard.forEach((entry, index) => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${index + 1}</td>
-                                <td>${entry.username}</td>
-                                <td>${entry.score}</td>
-                            `;
-                            leaderboardBody.appendChild(row);
-                        });
-                    });
-                });
-            }
-
-            // Call the original resetGame function
-            originalResetGame();
-        };
-    </script>
+  // Save score and update leaderboard when game resets
+  //await updateLeaderboard('snake');
+   
+  const originalResetGame = window.resetGame;
+  window.resetGame = async function() {
+    await updateLeaderboard('snake');
+    if (originalResetGame) {
+      originalResetGame();
+    }
+  };
+</script>
 </body>
 </html>

@@ -32,6 +32,38 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
+router.delete('/delete', async (req, res) => {
+  try {
+    const { userIds } = req.body;
+
+    if (!Array.isArray(userIds) || userIds.length === 0) {
+      return res.status(400).json({ message: 'No user IDs provided' });
+    }
+
+    // Optional: prevent deleting self or enforce admin role here
+    // Example:
+    // if (userIds.includes(req.user.id)) {
+    //   return res.status(400).json({ message: 'Cannot delete own user' });
+    // }
+
+    // Delete users with IDs in the array
+    const deletedCount = await User.destroy({
+      where: {
+        id: {
+          [Op.in]: userIds
+        }
+      }
+    });
+
+    if (deletedCount === 0) {
+      return res.status(404).json({ message: 'No users deleted. Check user IDs.' });
+    }
+
+    res.json({ message: `Deleted ${deletedCount} user(s)` });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
 
 // Login user
 router.post('/login', async (req, res) => {

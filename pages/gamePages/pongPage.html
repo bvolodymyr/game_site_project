@@ -14,13 +14,17 @@
         flex-direction: column; 
         align-items: center; 
         min-height: 100vh; 
-        background-color: #2C1229; }
+        background-color: #2C1229;
+        color: #eee;      
+      }
     header {
       text-align:center;
-      font-size: 35px;
+      font-size: 1.3rem;
       color: #6B046D;
+      position: absolute;
       background-color: #971995;
       width: 100%; /* Розтягуємо на всю ширину */
+      height: 12%;
     }
     canvas { 
         border: 2px solid #555; 
@@ -28,31 +32,78 @@
         margin-top: 100px; /* Додаємо трохи відступу від заголовка */ }
     .home-button {
       position: absolute;
-      bottom: 23%;
-      left: 48.2%;
+      top: 3%;
+      left: 2%;
       background-color: white;
       color: #2e0249;
       border: none;
       padding: 6px 12px;
-      font-size: 0.9em;
+      font-size: 1.1em;
       cursor: pointer;
       font-family: orbitron-medium;
       box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
       transition: background-color 0.3s ease;
       text-decoration: none;
-      border-radius: 4px;
+      border-radius: 5px;
     }
     .home-button:hover {
       background-color: #adadad;
     }
+ .high-score {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+.login-prompt {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        .leaderboard {
+            margin-top: 20px;
+            width: 370px;
+            border-collapse: collapse;
+        }
+        .leaderboard th, .leaderboard td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #555;
+        }
+        .leaderboard th {
+            background-color: #971995;
+            color: white;
+        }
+        .score {
+            font-size: 1.5em;
+            margin-bottom: 1px;
+        }
   </style>
 </head>
 <body>
   <header>
-    <h3>Pong</h3>
+    <h3 style="position: absolute; top:-10%; left: 46%">Pong</h3>
   </header>
-  <canvas id="pingPongCanvas" width="600" height="400"></canvas>
+    <div class="login-prompt" id="loginPrompt" style="position:absolute; bottom:20%; left:38%">
+        <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
+    </div>
+  <canvas id="pingPongCanvas" width="500" height="300"></canvas>
+  <div style="position: absolute; left:1%; top:27%">
+    <h3>Leaderboard</h3>
+    <table class="leaderboard" id="leaderboard">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+           
+            </script>
+        </tbody>
+    </table>
+    </div>
   <a href=".././main.html" class="home-button">Home</a>
   <script src="../../Games/pongGame.js"></script>
 </body>
 </html>
+

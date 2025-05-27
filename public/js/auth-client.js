@@ -53,6 +53,34 @@ async function loginUser(username, password) {
     throw error;
   }
 }
+// Function to delete multiple users by their IDs
+async function deleteUsers(userIds) {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('User not authenticated');
+
+    const response = await fetch('/api/auth/delete', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ userIds })  // send array of IDs to delete
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to delete users');
+    }
+
+    return data; // can return info about deleted users or success message
+  } catch (error) {
+    console.error('Delete users error:', error);
+    throw error;
+  }
+}
+
 
 // Function to check if user is logged in
 function isLoggedIn() {

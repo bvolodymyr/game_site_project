@@ -42,9 +42,41 @@ function findUser(name, password, callback) {
   });
 }
 
+function getLeaderboard(game, callback) {
+  const query = `
+    SELECT users.username, scores.score
+    FROM scores
+    JOIN users ON scores.user_id = users.id
+    WHERE scores.game = ?
+    ORDER BY scores.score DESC
+    LIMIT 10
+  `;
+  db.all(query, [game], (err, rows) => {
+    if (err) return callback(err);
+    callback(null, rows);
+  });
+}
+
+function getGlobalLeaderboard(callback) {
+  const query = `
+    SELECT users.username, scores.game, scores.score
+    FROM scores
+    JOIN users ON scores.user_id = users.id
+    ORDER BY scores.score DESC
+    LIMIT 10
+  `;
+  db.all(query, (err, rows) => {
+    if (err) return callback(err);
+    callback(null, rows);
+  });
+}
+
+
 module.exports = {
   addUser,
   setUserScore,
   getUserScores,
-  findUser
+  findUser,
+  getLeaderboard,
+  getGlobalLeaderboard
 };
