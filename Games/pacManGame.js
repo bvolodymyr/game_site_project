@@ -1,5 +1,6 @@
 
-
+const scoreDisplay = document.getElementById('score');
+let score = 0;
 // MovingDirection constants
 const MovingDirection = {
   up: 0,
@@ -351,6 +352,8 @@ class Pacman {
 	#eatDot() {
 		if (this.tileMap.eatDot(this.x, this.y) && this.madeFirstMove) {
 			this.wakaSound.play();
+			score++;
+			scoreDisplay.textContent = score;
 		}
 	}
 
@@ -372,7 +375,8 @@ class Pacman {
 			let powerDotAboutToExpireTimer = setTimeout(() => {
 				this.powerDotAboutToExpire = true;
 			}, 1000 * 3);
-
+			score += 10;
+			scoreDisplay.textContent = score;
 			this.timers.push(powerDotAboutToExpireTimer);
 		}
 	}
@@ -384,6 +388,8 @@ class Pacman {
 			);
 			collideEnemies.forEach((enemy) => {
 				enemies.splice(enemies.indexOf(enemy), 1);
+				score += 50;
+				scoreDisplay.textContent = score;
 				this.eatGhostSound.play();
 			});
 		}

@@ -88,6 +88,10 @@
       <h1 style="position:absolute; top:-8%; left:42%">Pac-Man</h1>
     </header>
     <canvas id="gameCanvas"></canvas>
+  <div class="score">Score: <span id="score">0</span></div>
+    <div class="high-score" id="highScoreContainer" style="display: none;">
+        Your High Score: <span id="highScore">0</span>
+    </div>
     <div class="login-prompt" id="loginPrompt">
         <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
     </div>
@@ -102,21 +106,62 @@
             </tr>
         </thead>
         <tbody id="leaderboardBody">
-            <script src="../../models/ScoreFunction.js">
-              const originalResetGame = window.resetGame;
-              window.resetGame = function() {
-                  updateLeaderboard('pacman');
-
-                  if (originalResetGame) {
-                      originalResetGame();
-                  }
-              };
-            </script>
+           
         </tbody>
     </table>
     </div>
     <a href=".././main.html" class="home-button">Home</a>
 
-    <script src="../../Games/pacManGame.js" type="module"></script>
   </body>
 </html>
+
+<script src="../../public/js/auth-client.js"></script>
+<script src="../../public/js/scores-client.js"></script>
+<script src="../../Games/pacManGame.js" type="module"></script>
+
+<script>
+  // Check if user is logged in
+  const isUserLoggedIn = isLoggedIn();
+  const highScoreContainer = document.getElementById('highScoreContainer');
+  const loginPrompt = document.getElementById('loginPrompt');
+  const highScoreElement = document.getElementById('highScore');
+
+  document.addEventListener('DOMContentLoaded', () => {
+    populateLeaderboardOnLoad('pacman');
+  });
+
+  if (isUserLoggedIn) {
+    highScoreContainer.style.display = 'block';
+    loginPrompt.style.display = 'none';
+    getUserHighScore('pacman').then(highScore => {
+      highScoreElement.textContent = highScore;
+    });
+  } else {
+    highScoreContainer.style.display = 'none';
+    loginPrompt.style.display = 'block';
+  }
+
+  // Save score and update leaderboard when game resets
+  //await updateLeaderboard('snake');
+   
+  const originalResetGame = window.resetGame;
+  window.resetGame = async function() {
+    await updateLeaderboard('pacman');
+    if (originalResetGame) {
+      originalResetGame();
+    }
+  };
+  const homeButton = document.querySelector('.home-button');
+
+  if (homeButton) {
+    homeButton.addEventListener('click', async (event) => {
+      event.preventDefault(); // Stop immediate navigation
+
+      // Call your leaderboard update function
+      await updateLeaderboard('pacman');
+
+      // After updating, navigate home
+      window.location.href = homeButton.href;
+    });
+  }
+</script>

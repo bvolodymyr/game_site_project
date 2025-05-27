@@ -82,6 +82,11 @@
   <header>
     <h3 style="position: absolute; top:-10%; left: 46%">Pong</h3>
   </header>
+      <div style="position: absolute; left: 40%; top:88%">
+  <div class="score">Score: <span id="score">0</span></div>
+    <div class="high-score" id="highScoreContainer" style="display: none;">
+        Your High Score: <span id="highScore">0</span>
+    </div>
     <div class="login-prompt" id="loginPrompt" style="position:absolute; bottom:20%; left:38%">
         <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
     </div>
@@ -103,7 +108,55 @@
     </table>
     </div>
   <a href=".././main.html" class="home-button">Home</a>
-  <script src="../../Games/pongGame.js"></script>
 </body>
 </html>
 
+<script src="../../public/js/auth-client.js"></script>
+<script src="../../public/js/scores-client.js"></script>
+<script src="../../Games/pongGame.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    populateLeaderboardOnLoad('pong');
+  });
+  // Check if user is logged in
+  const isUserLoggedIn = isLoggedIn();
+  const highScoreContainer = document.getElementById('highScoreContainer');
+  const loginPrompt = document.getElementById('loginPrompt');
+  const highScoreElement = document.getElementById('highScore');
+
+  if (isUserLoggedIn) {
+    highScoreContainer.style.display = 'block';
+    loginPrompt.style.display = 'none';
+    getUserHighScore('pong').then(highScore => {
+      highScoreElement.textContent = highScore;
+    });
+  } else {
+    highScoreContainer.style.display = 'none';
+    loginPrompt.style.display = 'block';
+  }
+
+  // Save score and update leaderboard when game resets
+  //await updateLeaderboard('snake');
+   
+  const originalResetGame = window.resetGame;
+  window.resetGame = async function() {
+    await updateLeaderboard('pong');
+    if (originalResetGame) {
+      originalResetGame();
+    }
+  };
+  const homeButton = document.querySelector('.home-button');
+
+  if (homeButton) {
+    homeButton.addEventListener('click', async (event) => {
+      event.preventDefault(); // Stop immediate navigation
+
+      // Call your leaderboard update function
+      await updateLeaderboard('pong');
+
+      // After updating, navigate home
+      window.location.href = homeButton.href;
+    });
+  }
+</script>

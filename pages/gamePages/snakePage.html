@@ -114,25 +114,24 @@
         <tbody id="leaderboardBody">
              
         </tbody>
+
     </table>
     </div>
-    <button id="testLeaderboardUpdate">Test Update Leaderboard</button>
 
 
-    <script src="../../public/js/auth-client.js"></script>
+<script src="../../public/js/auth-client.js"></script>
 <script src="../../public/js/scores-client.js"></script>
 <script src="../../Games/snakeGame.js"></script>
-<script>
-   document.getElementById('testLeaderboardUpdate').addEventListener('click', () => {
-    deleteUsers([2,3]); // Replace with actual user IDs to delete
-   });
-</script>
+
 <script>
   // Check if user is logged in
   const isUserLoggedIn = isLoggedIn();
   const highScoreContainer = document.getElementById('highScoreContainer');
   const loginPrompt = document.getElementById('loginPrompt');
   const highScoreElement = document.getElementById('highScore');
+  document.addEventListener('DOMContentLoaded', () => {
+    populateLeaderboardOnLoad('snake');
+  });
 
   if (isUserLoggedIn) {
     highScoreContainer.style.display = 'block';
@@ -155,6 +154,19 @@
       originalResetGame();
     }
   };
+  const homeButton = document.querySelector('.home-button');
+
+  if (homeButton) {
+    homeButton.addEventListener('click', async (event) => {
+      event.preventDefault(); // Stop immediate navigation
+
+      // Call your leaderboard update function
+      await updateLeaderboard('snake');
+
+      // After updating, navigate home
+      window.location.href = homeButton.href;
+    });
+  }
 </script>
 </body>
 </html>

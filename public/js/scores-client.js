@@ -135,3 +135,29 @@ async function updateGlobalLeaderboard() {
     console.error('Error updating global leaderboard:', error);
   }
 }
+
+async function populateLeaderboardOnLoad(game) {
+  try {
+    const leaderboard = await getLeaderboard(game);
+    const leaderboardBody = document.getElementById('leaderboardBody');
+
+    if (!leaderboardBody) {
+      console.warn('Leaderboard table not found in the DOM.');
+      return;
+    }
+
+    leaderboardBody.innerHTML = '';
+
+    leaderboard.forEach((entry, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${entry.username}</td>
+        <td>${entry.score}</td>
+      `;
+      leaderboardBody.appendChild(row);
+    });
+  } catch (error) {
+    console.error('Error populating leaderboard:', error);
+  }
+}
