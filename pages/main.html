@@ -1,197 +1,219 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEDOSITE</title>
-    <style>
-        @font-face {
-            font-family: orbitron-medium;
-            src: url(../fonts/orbitron-medium.otf);
-          }
-        body {
-            font-family: orbitron-medium;
-            margin: 0;
-            background-color: #2C1229; /* Темно-фіолетовий фон */
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px; /* Більший відступ після заголовка */
-            background-color: #971995;
-            width: 100%;
-        }
-
-        header h1 {
-            font-size: 2.2em; /* Трохи менший розмір шрифту */
-            color: #6B046D; /* колір тексту */
-            margin-bottom: 30px;
-            font-weight: bold; /* Зробити текст жирним */
-        }
-
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Трохи більша мінімальна ширина */
-            gap: 80px; /* Більший відступ між кнопками */
-            margin-bottom: 50px; /* Більший відступ після сітки */
-            padding: 0 30px; /* Більші бокові відступи */
-            max-width: 700px; /* Трохи більша максимальна ширина */
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .game-button {
-            color: white;
-            border: none;
-            padding: 15px;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4); /* Сильніша тінь */
-            overflow: hidden; /* Щоб вмістити зображення */
-        }
-
-        .game-button:hover {
-            background-color: #471e43; /* Світліший синьо-зелений при наведенні */
-        }
-
-        .game-button img {
-            max-width: 100%; /* Трохи менше зображення */
-            height: auto;
-            margin-bottom: 0px; /* Менший відступ під зображенням */
-        }
-
-        .navigation {
-            display: flex;
-            gap: 15px; /* Менший відступ між навігаційними кнопками */
-            margin-bottom: 30px; /* Більший відступ перед підвалом */
-        }
-
-        .nav-button {
-            background: none;
-            border: none;
-            color: white; /* Жовтий колір тексту навігації */
-            font-size: 0.9em; /* Трохи менший розмір шрифту */
-            cursor: pointer;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            padding: 8px 12px; /* Додаємо трохи padding для кращого вигляду */
-
-        }
-
-        .nav-button:hover {
-            color: #ffffff; /* Білий колір при наведенні */
-        }
-
-        .sign-buttons {
-            position: absolute;
-            top: 30px; /* Трохи вище */
-            right: 25px; /* Трохи ближче до краю */
-            display: flex;
-            gap: 20px; /* Менший відступ між кнопками Sign up */
-        }
-
-        .sign-button {
-            font-family: orbitron-medium;
-            background-color: white; /* Жовтий фон */
-            color: #2e0249; /* Темно-фіолетовий текст */
-            border: none;
-            padding: 6px 10px; /* Менші відступи */
-            font-size: 1em; /* Ще менший розмір шрифту */
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            border-radius: 5px;
-        }
-
-        .sign-button:hover {
-            background-color: #adadad; /* Світліший жовтий при наведенні */
-        }
-
-        footer {
-            margin-top: auto;
-            padding-right: 40px;
-            text-align: center;
-            position: absolute; /* Абсолютне позиціонування */
-            bottom: 0; /* Прив'язуємо до нижнього краю */
-            right: 0; /* Прив'язуємо до правого краю */
-            color: #aaa; /* Світло-сірий колір тексту */
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEDOSITE</title>
+<style>
+    @font-face {
+        font-family: orbitron-medium;
+        src: url(../fonts/orbitron-medium.otf);
+    }
+    body {
+        font-family: orbitron-medium;
+        margin: 0;
+        background-color: #2C1229;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+    header {
+        text-align: center;
+        margin-bottom: 40px;
+        background-color: #971995;
+        width: 100%;
+    }
+    header h1 {
+        font-size: 2.2em;
+        color: #6B046D;
+        margin-bottom: 30px;
+        font-weight: bold;
+    }
+    .game-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(160px, 160px));
+        gap: 80px;
+        margin-bottom: 50px;
+        padding: 0 30px;
+        max-width: 700px;
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+        align-items: center;
+    }
+    .game-button {
+        color: white;
+        border: none;
+        padding: 15px;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+    }
+    .game-button:hover {
+        background-color: #471e43;
+    }
+    .game-button img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 0px;
+    }
+    .navigation {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    .nav-button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 0.9em;
+        cursor: pointer;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        padding: 8px 12px;
+    }
+    .nav-button:hover {
+        color: #ffffff;
+    }
+    .sign-buttons {
+        position: absolute;
+        top: 30px;
+        right: 25px;
+        display: flex;
+    }
+    .sign-button {
+        font-family: orbitron-medium;
+        background-color: white;
+        color: #2e0249;
+        border: none;
+        padding: 6px 10px;
+        font-size: 1em;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        border-radius: 5px;
+        margin-right: 20px;
+    }
+    .sign-button:hover {
+        background-color: #adadad;
+    }
+    footer {
+        margin-top: auto;
+        padding-right: 40px;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        color: #aaa;
+    }
+    .leaderboard {
+        margin-top: 20px;
+        width: 370px;
+        border-collapse: collapse;
+    }
+    .leaderboard th, .leaderboard td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #555;
+    }
+    .leaderboard th {
+        background-color: #971995;
+        color: white;
+    }
+</style>
 </head>
 <body>
-    <header>
-        <h1>NEDOSITE WITH 8-BIT GAMES</h1>
-    </header>
+<header>
+    <h1>NEDOSITE WITH 8-BIT GAMES</h1>
+</header>
 
-    <div class="sign-buttons" id="authButtons">
-        <a href="../pages/loginPage.html" class="sign-button">Login</a>
-        <a href="../pages/registerPage.html" class="sign-button">Sign up</a>
-    </div>
+<div class="sign-buttons" id="authButtons">
+    <a href="../pages/userPages/loginPage.html" class="sign-button">Login</a>
+    <a href="../pages/userPages/registerPage.html" class="sign-button">Sign up</a>
+</div>
 
-    <div class="user-profile" id="userProfile" style="position: absolute; right:3%; top: 3%">
-        <span id="welcomeMessage"></span>
-        <button id="logoutButton" class="sign-button">Logout</button>
-    </div>
+<div class="user-profile" id="userProfile" style="position: absolute; right:3%; top: 3%; display: none;">
+    <span id="welcomeMessage"></span>
+    <button id="logoutButton" class="sign-button">Logout</button>
+</div>
 
-    <div class="game-grid">
-        <a href="../pages/snakePage.html" class="game-button">
-            <img src="../images/snake.png" alt="Snake">
-        </a>
-        <a href="../pages/pongPage.html" class="game-button">
-            <img src="../images/pong.png" alt="Pong">
-        </a>
-        <a href="../pages/invadersPage.html" class="game-button">
-            <img src="../images/space.png" alt="Space Invader">
-        </a>
-        <a href="../pages/pac-manPage.html" class="game-button">
-            <img src="../images/pac-man.png" alt="Pac-Man">
-        </a>
-    </div>
+<div class="game-grid">
+    <a href="../pages/gamePages/snakePage.html" class="game-button">
+        <img src="../images/snake.png" alt="Snake">
+    </a>
+    <a href="../pages/gamePages/pongPage.html" class="game-button">
+        <img src="../images/pong.png" alt="Pong">
+    </a>
+    <a href="../pages/gamePages/invadersPage.html" class="game-button">
+        <img src="../images/space.png" alt="Space Invader">
+    </a>
+    <a href="../pages/gamePages/pac-manPage.html" class="game-button">
+        <img src="../images/pac-man.png" alt="Pac-Man">
+    </a>
+</div>
 
-    <footer>
-        <nav class="navigation">
-            <a href="/pages/settings.html" class="nav-button"><b>Settings</b></a>
-            <a href="/pages/aboutUs.html" class="nav-button"><b>About us</b></a>
-        </nav>
-    </footer>
+<div style="position: absolute; left:1%; top:27%">
+    <h3>Leaderboard</h3>
+    <table class="leaderboard" id="leaderboard">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+                <th>Game</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+            
+        </tbody>
+    </table>
+</div>
 
-    <script src="../public/js/auth.js"></script>
-    <script>
-        // Check if user is logged in
-        function updateAuthUI() {
-            const authButtons = document.getElementById('authButtons');
-            const userProfile = document.getElementById('userProfile');
-            const welcomeMessage = document.getElementById('welcomeMessage');
+<footer>
+    <nav class="navigation">
+        <a href="../pages/userPages/about-us.html" class="nav-button"><b>About us</b></a>
+    </nav>
+</footer>
 
-            if (isLoggedIn()) {
-                const user = getCurrentUser();
-                welcomeMessage.textContent = `Welcome, ${user.username}!`;
-                authButtons.style.display = 'none';
-                userProfile.style.display = 'block';
-            } else {
-                authButtons.style.display = 'block';
-                userProfile.style.display = 'none';
-            }
+<script src="../public/js/auth-client.js"></script>
+<script src="../public/js/scores-client.js"></script>
+<script>
+    updateGlobalLeaderboard();
+</script>
+<script>
+    // Check if user is logged in
+    function updateAuthUI() {
+        const authButtons = document.getElementById('authButtons');
+        const userProfile = document.getElementById('userProfile');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+
+        if (isLoggedIn()) {
+            const user = getCurrentUser();
+            welcomeMessage.textContent = `Welcome, ${user.username}!`;
+            authButtons.style.display = 'none';
+            userProfile.style.display = 'block';
+        } else {
+            authButtons.style.display = 'block';
+            userProfile.style.display = 'none';
         }
+    }
 
-        // Logout button event listener
-        document.getElementById('logoutButton').addEventListener('click', function() {
-            logoutUser();
-            updateAuthUI();
-        });
-
-        // Update UI on page load
+    // Logout button event listener
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        logoutUser();
         updateAuthUI();
-    </script>
+    });
+
+    // Update UI on page load
+    updateAuthUI();
+</script>
 </body>
 </html>

@@ -4,11 +4,13 @@
 const {
   registerUser,
   loginUser,
+  deleteUsers,
   isLoggedIn,
   getCurrentUser,
   logoutUser,
   getToken
-} = require('../public/js/auth.js');  // Заміни на свій шлях
+} = require('../public/js/auth-client.js'); // Шлях відносно файлу тесту
+
 
 // Мок для localStorage
 const localStorageMock = (() => {

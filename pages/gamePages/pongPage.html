@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pong</title>
+  <style>
+    @font-face {
+      font-family: orbitron-medium;
+      src: url(/fonts/orbitron-medium.otf);
+    }
+    body { 
+        font-family: orbitron-medium;
+        margin: 0; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        min-height: 100vh; 
+        background-color: #2C1229;
+        color: #eee;      
+      }
+    header {
+      text-align:center;
+      font-size: 1.5rem;
+      color: #6B046D;
+      position: absolute;
+      background-color: #971995;
+      width: 100%; /* Розтягуємо на всю ширину */
+      height: 12%;
+    }
+    canvas { 
+        border: 2px solid #555; 
+        background-color: #421b3e; 
+        margin-top: 220px; /* Додаємо трохи відступу від заголовка */ }
+    .home-button {
+       background-color: white;
+            color: #2e0249;
+            border: none;
+            padding: 10px 18px;
+            font-size: 1em;
+            cursor: pointer;
+            font-family: orbitron-medium;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            border-radius: 4px;
+            position: absolute;
+            left: 2%;
+            top: 23%;
+    }
+    .home-button:hover {
+      background-color: #adadad;
+    }
+ .high-score {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+.login-prompt {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        .leaderboard {
+            margin-top: 20px;
+            width: 370px;
+            border-collapse: collapse;
+        }
+        .leaderboard th, .leaderboard td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #555;
+        }
+        .leaderboard th {
+            background-color: #971995;
+            color: white;
+        }
+        .score {
+            font-size: 1.5em;
+            margin-bottom: 1px;
+        }
+  </style>
+</head>
+<body>
+  <header>
+    <a href=".././main.html" class="home-button">Home</a>
+    <h3>Pong</h3>
+  </header>
+   <canvas id="pingPongCanvas" width="500" height="300"></canvas>
+      <div style="margin-top: 20px;">
+  <div class="score">Score: <span id="score">0</span></div>
+        <div class="login-prompt" id="loginPrompt" >
+        <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
+    </div>
+    </div>
+  
+  <div style="position: absolute; left:1%; top:27%">
+    <h3>Leaderboard</h3>
+    <table class="leaderboard" id="leaderboard">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+           
+            
+        </tbody>
+    </table>
+    </div>
+ 
+</body>
+</html>
+
+<script src="../../public/js/auth-client.js"></script>
+<script src="../../public/js/scores-client.js"></script>
+<script src="../../Games/pongGame.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    populateLeaderboardOnLoad('pong');
+  });
+  // Check if user is logged in
+  const isUserLoggedIn = isLoggedIn();
+  const highScoreContainer = document.getElementById('highScoreContainer');
+  const loginPrompt = document.getElementById('loginPrompt');
+  const highScoreElement = document.getElementById('highScore');
+
+  if (isUserLoggedIn) {
+    highScoreContainer.style.display = 'block';
+    loginPrompt.style.display = 'none';
+    getUserHighScore('pong').then(highScore => {
+      highScoreElement.textContent = highScore;
+    });
+  } else {
+    highScoreContainer.style.display = 'none';
+    loginPrompt.style.display = 'block';
+  }
+
+  // Save score and update leaderboard when game resets
+  //await updateLeaderboard('snake');
+   
+  const originalResetGame = window.resetGame;
+  window.resetGame = async function() {
+    await updateLeaderboard('pong');
+    if (originalResetGame) {
+      originalResetGame();
+    }
+  };
+  const homeButton = document.querySelector('.home-button');
+
+  if (homeButton) {
+    homeButton.addEventListener('click', async (event) => {
+      event.preventDefault(); // Stop immediate navigation
+
+      // Call your leaderboard update function
+      await updateLeaderboard('pong');
+
+      // After updating, navigate home
+      window.location.href = homeButton.href;
+    });
+  }
+</script>

@@ -1,5 +1,7 @@
 const canvas = document.getElementById("pingPongCanvas");
 const ctx = canvas.getContext("2d");
+const scoreDisplay = document.getElementById('score');
+
 
 // Розміри ракеток та м'яча
 const paddleWidth = 10;
@@ -22,6 +24,7 @@ const paddleSpeed = 10;
 // Рахунок гравців
 let leftScore = 0;
 let rightScore = 0;
+let totalScore =0;
 
 // Стан гри
 let isPaused = false;
@@ -102,19 +105,25 @@ function update() {
     // Перевірка зіткнення з лівою ракеткою
     if (ballX - ballRadius < paddleWidth && ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
       ballSpeedX = -ballSpeedX;
+      totalScore++;
+      scoreDisplay.textContent = totalScore;
     }
 
     // Перевірка зіткнення з правою ракеткою
     if (ballX + ballRadius > canvas.width - paddleWidth && ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
       ballSpeedX = -ballSpeedX;
+      totalScore++;
+      scoreDisplay.textContent = totalScore;
     }
 
     // Перевірка виходу м'яча за межі поля (гол)
     if (ballX - ballRadius < 0) {
       rightScore++;
+      totalScore = 0; // Скидаємо загальний рахунок при кожному голі
       resetBall();
     } else if (ballX + ballRadius > canvas.width) {
       leftScore++;
+      totalScore = 0; // Скидаємо загальний рахунок при кожному голі
       resetBall();
     }
   }
@@ -123,6 +132,7 @@ function update() {
 function resetBall() {
   ballX = canvas.width / 2;
   ballY = canvas.height / 2;
+  totalScore = 0; // Скидаємо загальний рахунок при кожному голі
   ballSpeedX = -ballSpeedX; // Змінюємо напрямок після голу
   ballSpeedY = (Math.random() - 0.5) * 10; // Додаємо випадкову вертикальну швидкість
 }
@@ -130,6 +140,7 @@ function resetBall() {
 function resetGame() {
   leftScore = 0;
   rightScore = 0;
+  totalScore = 0;
   leftPaddleY = canvas.height / 2 - paddleHeight / 2;
   rightPaddleY = canvas.height / 2 - paddleHeight / 2;
   resetBall();
