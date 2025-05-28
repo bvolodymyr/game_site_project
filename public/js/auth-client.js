@@ -105,5 +105,14 @@ function getToken() {
   return localStorage.getItem('token');
 }
 
+module.exports = {
+  registerUser,
+  loginUser,
+  deleteUsers,
+  isLoggedIn,
+  getCurrentUser,
+  logoutUser,
+  getToken
+};
 
 
