@@ -76,19 +76,75 @@
             color: #aaa;
         }
         .leaderboard {
-            margin-top: 20px;
-            width: 370px;
-            border-collapse: collapse;
-        }
-        .leaderboard th, .leaderboard td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #555;
-        }
-        .leaderboard th {
-            background-color: #971995;
-            color: white;
-        }
+        width: 370px;
+        border-collapse: collapse;
+        overflow: scroll;
+    }
+    .leaderboard th, .leaderboard td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #555;
+        position: sticky;
+    }
+    .leaderboard th {
+        background-color: #971995;
+        color: white;
+        
+    }
+   .scroll-container {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #971995;
+}
+
+/* Стилі таблиці */
+table.leaderboard {
+    border-collapse: collapse;
+    font-size: 15px;
+    color: white;
+    background-color: #1a001a;
+}
+
+table.leaderboard th,
+table.leaderboard td {
+    padding: 6px 10px;
+    text-align: left;
+    border-bottom: 1px solid #440044;
+}
+
+/* Sticky заголовок */
+table.leaderboard thead th {
+    position: sticky;
+    top: 0;
+    background-color: #330033;
+    z-index: 1;
+    color: #ffccff;
+    text-align: left;
+}
+
+/* Скролбар Chrome / Edge */
+.scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: #2c002c;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #971995;
+    border-radius: 0;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: #971995;
+}
+
+/* Скролбар Firefox */
+.scroll-container {
+    scrollbar-width: thin;
+    scrollbar-color: #971995 #2c002c;
+}
     </style>
 </head>
 <body>
@@ -106,21 +162,23 @@
         <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
     </div>
     </div>
-    <div style="position: absolute; left:1%; top:27%">
-    <h3>Leaderboard</h3>
-    <table class="leaderboard" id="leaderboard">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Player</th>
-                <th>Score</th>
-            </tr>
-        </thead>
-        <tbody id="leaderboardBody">
-           
-        </tbody>
-    </table>
+   <div style="position: absolute; left:1%; top:27%">
+    <h3 style="color: white; ">Leaderboard</h3>
+    <div class="scroll-container">
+        <table class="leaderboard" id="leaderboard">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+                <!-- Динамічні рядки -->
+            </tbody>
+        </table>
     </div>
+</div>
     
 
 </body>
