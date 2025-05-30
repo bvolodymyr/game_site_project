@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Змійка 8-біт</title>
+    <style>
+        @font-face {
+            font-family: orbitron-medium;
+            src: url(/fonts/orbitron-medium.otf);
+          }
+        body {
+            font-family: orbitron-medium;
+            margin: 0;
+            background-color: #2C1229;
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        header {
+            text-align:center;
+            font-size: 25px;
+            color: #6B046D;
+            background-color: #971995;
+            width: 100%; /* Розтягуємо на всю ширину */
+            height: 10%;
+            position: absolute;
+            top: 0;
+           
+          }
+        canvas {
+            margin: 0px;
+            background-color: #421b3e;
+            border: 2px solid #555;
+        }
+
+        .score {
+            font-size: 1.5em;
+            margin-bottom: 1px;
+            margin-top: 10px;
+        }
+        .home-button {
+           
+            background-color: white;
+            color: #2e0249;
+            border: none;
+            padding: 10px 18px;
+            font-size: 1em;
+            cursor: pointer;
+            font-family: orbitron-medium;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            border-radius: 4px;
+            position: absolute;
+            left: 2%;
+            top: 2.5%;
+        }
+        .home-button:hover {
+            background-color: #adadad;
+        }
+        .high-score {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .login-prompt {
+            margin-top: 0px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        .leaderboard {
+        width: 370px;
+        border-collapse: collapse;
+        overflow: scroll;
+    }
+    .leaderboard th, .leaderboard td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #555;
+        position: sticky;
+    }
+    .leaderboard th {
+        background-color: #971995;
+        color: white;
+        
+    }
+   .scroll-container {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #971995;
+}
+
+/* Стилі таблиці */
+table.leaderboard {
+    border-collapse: collapse;
+    font-size: 15px;
+    color: white;
+    background-color: #1a001a;
+}
+
+table.leaderboard th,
+table.leaderboard td {
+    padding: 6px 10px;
+    text-align: left;
+    border-bottom: 1px solid #440044;
+}
+
+/* Sticky заголовок */
+table.leaderboard thead th {
+    position: sticky;
+    top: 0;
+    background-color: #330033;
+    z-index: 1;
+    color: #ffccff;
+    text-align: left;
+}
+
+/* Скролбар Chrome / Edge */
+.scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: #2c002c;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #971995;
+    border-radius: 0;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: #971995;
+}
+
+/* Скролбар Firefox */
+.scroll-container {
+    scrollbar-width: thin;
+    scrollbar-color: #971995 #2c002c;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h3 style="position: absolute; top:-8%; left: 47%">Snake</h3>
+    </header>
+  
+    <canvas id="snakeCanvas" width="400" height="400"></canvas>
+      <div>
+    <div class="score">Score: <span id="score">0</span></div>
+     <div class="high-score" id="highScoreContainer" style="display: none;">
+        Your High Score: <span id="highScore">0</span>
+    </div>
+    <div class="login-prompt" id="loginPrompt" >
+        <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
+    </div>
+    </div>
+    <a href=".././main.html" class="home-button">Home</a>
+<div style="position: absolute; left:1%; top:27%">
+    <h3 style="color: white; ">Leaderboard</h3>
+    <div class="scroll-container">
+        <table class="leaderboard" id="leaderboard">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+                <!-- Динамічні рядки -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="../../public/js/auth-client.js"></script>
+<script src="../../public/js/scores-client.js"></script>
+<script src="../../Games/snakeGame.js"></script>
+
+<script>
+  // Check if user is logged in
+  const isUserLoggedIn = isLoggedIn();
+  const highScoreContainer = document.getElementById('highScoreContainer');
+  const loginPrompt = document.getElementById('loginPrompt');
+  const highScoreElement = document.getElementById('highScore');
+  document.addEventListener('DOMContentLoaded', () => {
+    populateLeaderboardOnLoad('snake');
+  });
+
+  if (isUserLoggedIn) {
+    highScoreContainer.style.display = 'block';
+    loginPrompt.style.display = 'none';
+    getUserHighScore('snake').then(highScore => {
+      highScoreElement.textContent = highScore;
+    });
+  } else {
+    highScoreContainer.style.display = 'none';
+    loginPrompt.style.display = 'block';
+  }
+
+  // Save score and update leaderboard when game resets
+  //await updateLeaderboard('snake');
+   
+  const originalResetGame = window.resetGame;
+  window.resetGame = async function() {
+    await updateLeaderboard('snake');
+    if (originalResetGame) {
+      originalResetGame();
+    }
+  };
+  const homeButton = document.querySelector('.home-button');
+
+  if (homeButton) {
+    homeButton.addEventListener('click', async (event) => {
+      event.preventDefault(); // Stop immediate navigation
+
+      // Call your leaderboard update function
+      await updateLeaderboard('snake');
+
+      // After updating, navigate home
+      window.location.href = homeButton.href;
+    });
+  }
+</script>
+</body>
+</html>

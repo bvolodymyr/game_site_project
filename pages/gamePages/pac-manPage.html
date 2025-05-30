@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pac-Man</title>
+    <style>
+        @font-face {
+            font-family: orbitron-medium;
+            src: url(/fonts/orbitron-medium.otf);
+          }
+body {
+        font-family: orbitron-medium;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        flex-direction: column;
+        height: 100vh;
+        background-color: #2C1229; 
+        color: #eee
+      }
+#gameCanvas {
+    background-color: #421b3e;
+    box-shadow: 10px 10px 20px black;
+}
+
+header {
+        text-align:center;
+        font-size: 1.1rem;
+        color: #6B046D;
+        background-color: #971995;
+        width: 100%; /* Розтягуємо на всю ширину */
+        height: 12%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      
+.home-button {
+        position: absolute;
+        top: 24%;
+        left: 2%;
+        background-color: white;
+        color: #2e0249;
+        padding: 8px 16px;
+        font-family: orbitron-medium, sans-serif;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4);
+        transition: background-color 0.3s ease;
+        z-index: 900;
+      }
+
+.home-button:hover {
+        background-color: #adadad;
+        color: #2e0249;
+      }
+      .login-prompt {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        .leaderboard {
+        width: 370px;
+        border-collapse: collapse;
+        overflow: scroll;
+    }
+    .leaderboard th, .leaderboard td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #555;
+        position: sticky;
+    }
+    .leaderboard th {
+        background-color: #971995;
+        color: white;
+        
+    }
+   .scroll-container {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #971995;
+}
+
+/* Стилі таблиці */
+table.leaderboard {
+    border-collapse: collapse;
+    font-size: 15px;
+    color: white;
+    background-color: #1a001a;
+}
+
+table.leaderboard th,
+table.leaderboard td {
+    padding: 6px 10px;
+    text-align: left;
+    border-bottom: 1px solid #440044;
+}
+
+/* Sticky заголовок */
+table.leaderboard thead th {
+    position: sticky;
+    top: 0;
+    background-color: #330033;
+    z-index: 1;
+    color: #ffccff;
+    text-align: left;
+}
+
+/* Скролбар Chrome / Edge */
+.scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: #2c002c;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #971995;
+    border-radius: 0;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: #971995;
+}
+
+/* Скролбар Firefox */
+.scroll-container {
+    scrollbar-width: thin;
+    scrollbar-color: #971995 #2c002c;
+}
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href=".././main.html" class="home-button">Home</a>
+      <h1>Pac-Man</h1>
+    </header>
+    <canvas id="gameCanvas"></canvas>
+    <div style="margin-top: 20px;">
+  <div class="score">Score: <span id="score">0</span></div>
+   <div class="high-score" id="highScoreContainer" style="display: none;">
+        Your High Score: <span id="highScore">0</span>
+    </div>
+    <div class="login-prompt" id="loginPrompt">
+        <a href="../userPages/loginPage.html">Login</a> or <a href="../userPages/registerPage.html">Register</a> to save your scores!
+    </div>
+    </div>
+<div style="position: absolute; left:1%; top:27%">
+    <h3 style="color: white; ">Leaderboard</h3>
+    <div class="scroll-container">
+        <table class="leaderboard" id="leaderboard">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+                <!-- Динамічні рядки -->
+            </tbody>
+        </table>
+    </div>
+</div>
+    
+
+  </body>
+</html>
+
+<script src="../../public/js/auth-client.js"></script>
+<script src="../../public/js/scores-client.js"></script>
+<script src="../../Games/pacManGame.js" type="module"></script>
+
+<script>
+  // Check if user is logged in
+  const isUserLoggedIn = isLoggedIn();
+  const highScoreContainer = document.getElementById('highScoreContainer');
+  const loginPrompt = document.getElementById('loginPrompt');
+  const highScoreElement = document.getElementById('highScore');
+
+  document.addEventListener('DOMContentLoaded', () => {
+    populateLeaderboardOnLoad('pacman');
+  });
+
+  if (isUserLoggedIn) {
+    highScoreContainer.style.display = 'block';
+    loginPrompt.style.display = 'none';
+    getUserHighScore('pacman').then(highScore => {
+      highScoreElement.textContent = highScore;
+    });
+  } else {
+    highScoreContainer.style.display = 'none';
+    loginPrompt.style.display = 'block';
+  }
+
+  // Save score and update leaderboard when game resets
+  //await updateLeaderboard('snake');
+   
+  const originalResetGame = window.resetGame;
+  window.resetGame = async function() {
+    await updateLeaderboard('pacman');
+    if (originalResetGame) {
+      originalResetGame();
+    }
+  };
+  const homeButton = document.querySelector('.home-button');
+
+  if (homeButton) {
+    homeButton.addEventListener('click', async (event) => {
+      event.preventDefault(); // Stop immediate navigation
+
+      // Call your leaderboard update function
+      await updateLeaderboard('pacman');
+
+      // After updating, navigate home
+      window.location.href = homeButton.href;
+    });
+  }
+</script>

@@ -1,8 +1,5 @@
-/* Simple JavaScript Inheritance
- * By John Resig http://ejohn.org/
- * MIT Licensed.
- */
-// Inspired by base2 and Prototype
+const scoreDisplay = document.getElementById('score');
+let score = 0;
 (function () {
 	var initializing = false,
 		fnTest = /xyz/.test(function () {
@@ -706,6 +703,7 @@ function resolveBulletEnemyCollisions() {
 			var alien = aliens[j];
 			if (checkRectCollision(bullet.bounds, alien.bounds)) {
 				alien.alive = bullet.alive = false;
+				
 				particleManager.createExplosion(
 					alien.position.x,
 					alien.position.y,
@@ -718,6 +716,7 @@ function resolveBulletEnemyCollisions() {
 					50
 				);
 				player.score += 25;
+				scoreDisplay.textContent = player.score;
 			}
 		}
 	}
@@ -732,6 +731,7 @@ function resolveBulletPlayerCollisions() {
 		) {
 			if (player.lives === 0) {
 				hasGameStarted = false;
+				player.score = 0;
 			} else {
 				alien.bullet.alive = false;
 				particleManager.createExplosion(
